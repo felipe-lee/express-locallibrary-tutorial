@@ -2,7 +2,7 @@ var BookInstance = require('../models/bookinstance');
 
 // Display list of all BookInstances.
 exports.bookinstance_list = function (req, res) {
-  BookInstance.find({}, 'imprint status').populate('book').exec(function (err, list_bookinstances) {
+  BookInstance.find().populate('book').exec(function (err, list_bookinstances) {
     if (err) {
       return next(err);
     }
