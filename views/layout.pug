@@ -1,7 +1,39 @@
 doctype html
-html
+html(lang='en')
     head
         title= title
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO", crossorigin="anonymous")
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+        script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js", integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy", crossorigin="anonymous")
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
-        block content
+        div(class='container-fluid')
+            div(class='row')
+                div(class='col-sm-2')
+                    block sidebar
+                        ul(class='sidebar-nav')
+                            li
+                                a(href='/catalog') Home
+                            li
+                                a(href='/catalog/books') All books
+                            li
+                                a(href='/catalog/authors') All authors
+                            li
+                                a(href='/catalog/genres') All genres
+                            li
+                                a(href='/catalog/bookinstances') All book-instances
+                            li
+                                hr
+                            li
+                                a(href='/catalog/author/create') Create new author
+                            li
+                                a(href='/catalog/genre/create') Create new genre
+                            li
+                                a(href='/catalog/book/create') Create new book
+                            li
+                                a(href='/catalog/bookinstance/create') Create new book instance (copy)
+
+                div(class='col-sm-10')
+                    block content
