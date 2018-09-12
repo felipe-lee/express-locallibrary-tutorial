@@ -40,6 +40,7 @@ exports.bookinstance_detail = function (req, res, next) {
 // Display BookInstance create form on GET.
 exports.bookinstance_create_get = function (req, res, next) {
   Book.find({}, 'title')
+    .sort([['title', 'ascending']])
     .exec(function (err, books) {
       if (err) {
         return next(err);
@@ -107,13 +108,41 @@ exports.bookinstance_create_post = [
 ];
 
 // Display BookInstance delete form on GET.
-exports.bookinstance_delete_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance delete GET');
+exports.bookinstance_delete_get = function (req, res, next) {
+  BookInstance.findById(req.params.id)
+    .populate('book')
+    .exec(function (err, bookInstance) {
+      if (err) {
+        return next(err);
+      }
+
+      // No book copy found. Don't know what book they were looking at so just send to general book list
+      if (bookInstance === null) {
+        res.redirect('/catalog/books');
+      }
+
+      res.render('bookinstance_delete', {title: 'Delete Book Copy', bookinstance: bookInstance});
+    });
 };
 
 // Handle BookInstance delete on POST.
-exports.bookinstance_delete_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance delete POST');
+exports.bookinstance_delete_post = function (req, res, next) {
+  BookInstance.findById(req.body.bookinstanceid)
+    .populate('book')
+    .exec(function (err, bookInstance) {
+      if (err) {
+        return next(err);
+      }
+
+      // Delete book instance and redirect to book details
+      bookInstance.remove(function deleteBookInstance(err) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect(bookInstance.book.url);
+      });
+    });
 };
 
 // Display BookInstance update form on GET.
