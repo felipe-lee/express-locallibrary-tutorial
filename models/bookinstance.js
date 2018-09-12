@@ -31,5 +31,12 @@ BookInstanceSchema
     return moment(this.due_back).format('MMMM Do, YYYY');
   });
 
+// Virtual to get due_back date in YYYY-MM-DD format for forms
+BookInstanceSchema
+  .virtual('due_back_yyyy_mm_dd')
+  .get(function () {
+    return moment(this.due_back).format('YYYY-MM-DD');
+  });
+
 //Export model
 module.exports = mongoose.model('BookInstance', BookInstanceSchema);
