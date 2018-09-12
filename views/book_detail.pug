@@ -3,7 +3,7 @@ extends layout
 block content
     h1 Title: #{book.title}
 
-    p #[strong Author:]
+    p #[strong Author: ]
         a(href=book.author.url) #{book.author.name}
     p #[strong Summary:] #{book.summary}
     p #[strong ISBN:] #{book.isbn}
@@ -33,3 +33,8 @@ block content
                 a(href=copy.url) #{copy._id}
         else
             p There are no copies of this book in the library.
+    hr
+    p
+        a(href=book.url + '/update') Update Book
+    p
+        a(href=book.url + '/delete') Delete Book
